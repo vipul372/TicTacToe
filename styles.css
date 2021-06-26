@@ -1,0 +1,147 @@
+*, *::after, *::before{
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+}
+
+:root{
+  --box-size: 100px;
+  --mark-size: calc(var(--box-size) * .9);
+  --silver-color: rgba(255, 255, 255, 0.9)
+}
+
+.board{
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  /* will center the grid cells */
+  justify-content: center;
+  align-content: center;
+  /* will center the items inside the individual cell*/
+  justify-items: center;
+  align-items: center;
+  
+}
+
+.cell{
+  height: var(--box-size);
+  width: var(--box-size);
+  border: 1px solid black; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--mark-size);
+  position: relative;
+  cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3){
+  border-top: none;
+}
+.cell:nth-child(3n+1){
+  border-left: none;
+}
+.cell:nth-child(3n+3){
+  border-right: none;
+}
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7){
+  border-bottom: none;
+}
+
+.cell.x,
+.cell.circle{
+  cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after{
+  background-color: black;
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
+  background-color: lightgray;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
+  content: "";
+  width: calc(var(--mark-size) * .15);
+  height: var(--mark-size);
+  position: absolute;
+  border-radius: .3rem;
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before{
+  transform: rotate(-45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after{
+  transform: rotate(45deg);
+}
+
+.cell.circle::before,
+.cell.circle::after{
+  border: calc(var(--mark-size) * .14) solid black;
+}
+
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after{
+  border: calc(var(--mark-size) * .14) solid lightgray;
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after{
+  content: "";
+  width: calc(var(--mark-size) * .8);
+  height: calc(var(--mark-size) * .9);
+  position: absolute;
+  border-radius: 100%;
+}
+
+.winning-message{
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .9);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  color: var(--silver-color);
+}
+
+.winning-message button{
+  font-size: 3rem;
+  padding: .25em .35em;
+  background-color: var(--silver-color);
+  border: 2px solid black;
+  border-radius: .3em;
+}
+
+.winning-message button:hover{
+  background-color: black;
+  color: var(--silver-color);
+  border: 2px solid var(--silver-color);
+  cursor: pointer;
+}
+
+.winning-message.show{
+  display: flex;
+}
